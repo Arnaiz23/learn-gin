@@ -1,0 +1,54 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Go workspace and build files
+*.out
+*.log
+*.tmp
+
+# Build artifacts
+/build/
+/bin/
+/pkg/
+
+# Dependency directories (remove the comment if you are using vendoring)
+# /vendor/
+
+# Temporary files
+tmp/
+
+# IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Go module files
+go.sum
+
+# Go mod cache
+.modcache
+
+# Environment variable files
+.env
+.env.local
+.env.production
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+*.cov
+*.cover
+*.coverage
+
+# Project binarie
+ginserver
