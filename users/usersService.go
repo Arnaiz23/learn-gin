@@ -1,27 +1,48 @@
 package users
 
-import "errors"
+import (
+	"errors"
+
+	"ginserver/database"
+)
 
 func GetUsersS() ([]User, error) {
-	if Users == nil {
+
+	rows, err := database.DB.Query("SELECT id, name, last_name, age FROM users")
+
+	if err != nil {
 		return nil, errors.New("Users not found")
 	}
 
-  return Users, nil
+	defer rows.Close()
+
+	users := []User{}
+
+	for rows.Next() {
+		var user User
+		err = rows.Scan(&user.ID, &user.Name, &user.LastName, &user.Age)
+		if err != nil {
+			return nil, errors.New("errorr???")
+		}
+		users = append(users, user)
+	}
+
+	return users, nil
 }
 
-func GetUserS (id int) (*User, error) {
+func GetUserS(id int) (*User, error) {
 	var foundUser *User
+	var Users []User
 
 	for _, user := range Users {
-		if user.Id == id {
+		if user.ID == id {
 			foundUser = &user
 		}
 	}
 
 	if foundUser == nil {
-    return nil, errors.New("This user doesn't exists")
+		return nil, errors.New("This user doesn't exists")
 	}
 
-  return foundUser, nil
+	return foundUser, nil
 }

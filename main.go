@@ -7,9 +7,11 @@ import (
 	"os"
 
 	"ginserver/users"
+  "ginserver/database"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+  _ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
@@ -20,6 +22,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
+
+  database.InitDB("./database.db")
+
+  defer database.DB.Close()
 
   gin.SetMode(os.Getenv("GIN_MODE"))
 

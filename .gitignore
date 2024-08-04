@@ -52,3 +52,6 @@ Thumbs.db
 
 # Project binarie
 ginserver
+
+# Database files
+*.db
