@@ -6,12 +6,11 @@ import (
 	"net/http"
 	"os"
 
+	"ginserver/database"
 	"ginserver/users"
-  "ginserver/database"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-  _ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
@@ -23,11 +22,9 @@ func main() {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
-  database.InitDB("./database.db")
+	database.InitDB("./database.db")
 
-  defer database.DB.Close()
-
-  gin.SetMode(os.Getenv("GIN_MODE"))
+	gin.SetMode(os.Getenv("GIN_MODE"))
 
 	router := gin.Default()
 

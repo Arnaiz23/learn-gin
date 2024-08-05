@@ -1,29 +1,25 @@
 package database
 
 import (
-	"database/sql"
-	_ "github.com/mattn/go-sqlite3"
+	"ginserver/models"
 	"log"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
-var DB *sql.DB
+var DB *gorm.DB
 
 func InitDB(dataSourceName string) {
 	var err error
-	DB, err = sql.Open("sqlite3", dataSourceName)
+	DB, err = gorm.Open(sqlite.Open(dataSourceName), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("Error opening database: %v", err)
+		log.Fatalf("Error initializing database: %v", err)
 	}
 
-	createTableSQL := `CREATE TABLE IF NOT EXISTS users (
-        "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-        "name" TEXT,
-        "last_name" TEXT,
-        "age" INTEGER
-    );`
-
-	_, err = DB.Exec(createTableSQL)
+	// Create a table with the User structure
+	err = DB.AutoMigrate(&models.User{})
 	if err != nil {
-		log.Fatalf("Error creating table: %v", err)
+		log.Fatalf("Error migrating the users table  %v", err)
 	}
 }
