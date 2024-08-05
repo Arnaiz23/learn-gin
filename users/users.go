@@ -1,7 +1,6 @@
 package users
 
 import (
-	"ginserver/models"
 	"net/http"
 	"strconv"
 
@@ -14,7 +13,7 @@ func GetUsers(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error": err,
+			"error": err.Error(),
 			"data":  nil,
 		})
 		return
@@ -29,8 +28,7 @@ func GetUsers(c *gin.Context) {
 func GetUser(c *gin.Context) {
 	idStr := c.Param("id")
 
-	// id, err := strconv.Atoi(idStr)
-	_, err := strconv.Atoi(idStr)
+	id, err := strconv.Atoi(idStr)
 
 	if err != nil {
 		// Handle the error if the conversion fails
@@ -41,12 +39,11 @@ func GetUser(c *gin.Context) {
 		return
 	}
 
-  var user models.User
-  // user, err := GetUserS(id)
+  user, err := GetUserS(id)
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-      "error": err,
+      "error": err.Error(),
       "data": nil,
     })
 		return

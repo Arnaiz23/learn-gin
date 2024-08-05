@@ -20,20 +20,15 @@ func GetUsersS() ([]models.User, error) {
 	return users, nil
 }
 
-// TODO
+// TODO: Return only the fields that I want (delete `DeletedAt`)
 func GetUserS(id int) (*models.User, error) {
-	var foundUser *models.User
-	var Users []models.User
+  var user *models.User
 
-	for _, user := range Users {
-		if user.ID == id {
-			foundUser = &user
-		}
-	}
+  result := database.DB.First(&user, id)
 
-	if foundUser == nil {
+  if result.Error != nil {
 		return nil, errors.New("This user doesn't exists")
-	}
+  }
 
-	return foundUser, nil
+  return user, nil
 }
